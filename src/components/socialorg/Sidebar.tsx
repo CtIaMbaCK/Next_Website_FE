@@ -35,7 +35,7 @@ export default function Sidebar() {
     },
     { 
       name: 'Quản lý Chiến dịch - sự kiện', 
-      href: '/socialorg/events', 
+      href: '/socialorg/manage-events', 
       icon: 'campaign' 
     },
     { 

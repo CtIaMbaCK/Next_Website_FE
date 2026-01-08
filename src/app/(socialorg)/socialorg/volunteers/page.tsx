@@ -4,6 +4,7 @@ import { useState } from 'react';
 import FilterToolbar from '@/components/FilterToolbar';
 import UserTable from '@/components/UserTable';
 import { User } from '@/types';
+import { Button } from '@/components/ui/button';
 import Link from "next/link";
 import {
   Select,
@@ -63,10 +64,10 @@ export default function NeedyPage() {
           <h1 className="text-2xl font-bold text-gray-900">Tình nguyện viên</h1>
           <p className="text-sm text-gray-500 mt-1">Quản lý danh sách Tình nguyện viên</p>
         </div>
-        <button className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors shadow-sm font-medium">
-          <span className="material-symbols-outlined text-[20px]">add</span>
-          Thêm Tình nguyện viên
-        </button>
+        <Button className="gap-2 bg-primary text-white hover:bg-teal-700 shadow-sm">
+            <span className="material-symbols-outlined text-[20px]">add</span>
+            Thêm Tình nguyện viên
+        </Button>
       </div>
 
       {/* Component Toolbar */}
