@@ -5,17 +5,33 @@
   --foreground: #171717;
 }
 
-/* --- SỬA ĐOẠN NÀY --- */
+/* --- CẬP NHẬT THEME --- */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Thêm màu primary vào đây */
+  /* Màu Primary hiện tại của bạn */
   --color-primary: #008080;
+
+  /* --- THÊM MỚI: Màu sắc cho trang Create/Dashboard --- */
+  --color-custom-teal: #00A79D;
+  --color-custom-teal-light: #E6F6F5;
+  --color-custom-gray-bg: #F7FAFC;
+  --color-custom-gray-border: #E2E8F0;
+  --color-custom-text-dark: #1A202C;
+  --color-custom-text-light: #718096;
+  --color-custom-orange: #FFA500;
+  --color-custom-red: #EF4444;
 }
-/* -------------------- */
+
+/* --- THÊM MỚI: Class Utility cho Card --- */
+@layer utilities {
+  .custom-card {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -32,7 +48,6 @@ body {
 
 /* Các class Material Symbols giữ nguyên... */
 .material-symbols-outlined {
-  /* ... code cũ của bạn ... */
   font-family: 'Material Symbols Outlined';
   font-weight: normal;
   font-style: normal;

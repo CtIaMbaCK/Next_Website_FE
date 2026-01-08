@@ -4,6 +4,8 @@ import { useState } from 'react';
 import FilterToolbar from '@/components/FilterToolbar';
 import UserTable from '@/components/UserTable';
 import { User } from '@/types';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 // Dữ liệu mẫu (Hoặc gọi API ở đây)
 const MOCK_DATA: User[] = [
@@ -45,10 +47,12 @@ export default function NeedyPage() {
           <h1 className="text-2xl font-bold text-gray-900">Người cần giúp đỡ</h1>
           <p className="text-sm text-gray-500 mt-1">Quản lý danh sách Người cần giúp đỡ</p>
         </div>
-        <button className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors shadow-sm font-medium">
-          <span className="material-symbols-outlined text-[20px]">add</span>
-          Thêm Người cần giúp đỡ
-        </button>
+        <Link href="/socialorg/bficiary/create">
+          <Button className="gap-2 bg-primary text-white hover:bg-teal-700 shadow-sm">
+            <span className="material-symbols-outlined text-[20px]">add</span>
+            Thêm Người cần giúp đỡ
+          </Button>
+        </Link>
       </div>
 
       {/* Component Toolbar */}
