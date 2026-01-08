@@ -24,8 +24,8 @@ export default function FilterToolbar({ searchTerm, onSearchChange }: FilterTool
           <option value="">Tất cả trạng thái</option>
           <option value="ACTIVE">Đã xác minh</option>
           <option value="PENDING">Chờ duyệt</option>
-          <option value="DENNIED">Chờ duyệt</option>
-          <option value="BANNED">Từ chối</option>
+          <option value="DENNIED">Từ chối</option>
+          <option value="BANNED">Bị khóa</option>
         </select>
       </div>
     </div>

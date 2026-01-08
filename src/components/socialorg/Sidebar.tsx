@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation'; // 2. Import hook lấy đường dẫn
 
 export default function Sidebar() {
-  const pathname = usePathname(); // 3. Lấy đường dẫn hiện tại (ví dụ: /needy)
+  const pathname = usePathname(); // 3. Lấy đường dẫn hiện tại (ví dụ: /sosicalorg/dashboard)
 
   // 4. Định nghĩa danh sách menu tại đây cho gọn
   const menuItems = [
@@ -20,35 +20,35 @@ export default function Sidebar() {
     },
     { 
       name: 'Quản lý Tình nguyện viên', 
-      href: '/volunteers', 
+      href: '/socialorg/volunteers', 
       icon: 'group' 
     },
     { 
       name: 'Quản lý hoạt động', 
-      href: '/requests', 
+      href: '/socialorg/requests', 
       icon: 'volunteer_activism' 
     },
     { 
       name: 'Khen thưởng Tình nguyện viên', 
-      href: '/appreciation', 
+      href: '/socialorg/appreciation', 
       icon: 'military_tech' 
     },
     { 
       name: 'Quản lý Chiến dịch - sự kiện', 
-      href: '/events', 
+      href: '/socialorg/events', 
       icon: 'campaign' 
     },
     { 
       name: 'Quản lý Truyền thông', 
-      href: '/blogs', 
+      href: '/socialorg/blogs', 
       icon: 'perm_media' 
     },
     { 
       name: 'Thống kê', 
-      href: '/analysis', 
+      href: '/socialorg/analysis', 
       icon: 'bar_chart' 
     },
-    // Bạn có thể thêm các mục khác vào đây...
+    // Thêm phần tử cho sidebar...
   ];
 
   return (
