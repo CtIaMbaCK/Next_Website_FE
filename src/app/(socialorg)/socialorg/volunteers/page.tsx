@@ -82,7 +82,7 @@ export default function NeedyPage() {
                     <SelectItem value="ALL">Tất cả</SelectItem>
                     <SelectItem value="ACTIVE">Hoạt động</SelectItem>
                     <SelectItem value="PENDING">Chờ duyệt</SelectItem>
-                    <SelectItem value="DENNIED">Bị từ chối</SelectItem>
+                    <SelectItem value="DENIED">Bị từ chối</SelectItem>
                     <SelectItem value="BANNED">Bị khóa</SelectItem>
                 </SelectContent>
             </Select>

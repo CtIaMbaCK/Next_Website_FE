@@ -3,18 +3,13 @@
 import { MOCK_DATA } from '@/data/mockData';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { useParams } from 'next/navigation'; // 1. Import hook này
-import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 
 export default function EditBeneficiaryPage() {
   // 2. Lấy params thông qua hook thay vì props
   const params = useParams();
-  
-  // 3. Debug: Kiểm tra xem ID nhận được là gì
-  // Mở F12 (Console) trên trình duyệt để xem dòng này in ra gì
-  console.log("ID từ URL:", params?.id); 
 
-  // 4. Tìm user
+  // 3. Tìm user
   // Lưu ý: params.id có thể là string hoặc string array, nên ta ép kiểu an toàn
   const userId = Array.isArray(params?.id) ? params.id[0] : params?.id;
   const user = MOCK_DATA.find((u) => u.id === userId);

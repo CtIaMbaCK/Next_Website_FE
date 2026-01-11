@@ -1,5 +1,6 @@
 import React from 'react';
-import Image from 'next/image'; // Khuyên dùng component Image của Next.js
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
@@ -16,12 +17,12 @@ export default function HomePage() {
             </span>
           </div>
           {/* Login Button */}
-          <a
+          <Link
             className="bg-brand-teal-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-brand-teal-600 transition-colors"
-            href="#"
+            href="/login"
           >
             Đăng nhập
-          </a>
+          </Link>
         </header>
         {/* END: MainHeader */}
 
@@ -76,7 +77,7 @@ export default function HomePage() {
                   </p>
                   <a
                     className="mt-auto w-full text-center bg-brand-teal-50 text-brand-teal-600 font-semibold py-3 rounded-lg hover:bg-teal-100 transition-colors"
-                    href="#"
+                    href="/blogs"
                   >
                     Đọc thêm
                   </a>
@@ -96,7 +97,7 @@ export default function HomePage() {
                   </p>
                   <a
                     className="mt-auto w-full text-center bg-brand-teal-50 text-brand-teal-600 font-semibold py-3 rounded-lg hover:bg-teal-100 transition-colors"
-                    href="#"
+                    href="/blogs"
                   >
                     Đọc thêm
                   </a>
@@ -116,7 +117,7 @@ export default function HomePage() {
                   </p>
                   <a
                     className="mt-auto w-full text-center bg-brand-teal-50 text-brand-teal-600 font-semibold py-3 rounded-lg hover:bg-teal-100 transition-colors"
-                    href="#"
+                    href="/blogs"
                   >
                     Đọc thêm
                   </a>

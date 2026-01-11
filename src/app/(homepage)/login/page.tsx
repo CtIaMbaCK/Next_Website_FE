@@ -1,11 +1,70 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image'; // Dùng Image tối ưu của Next.js
-import { Button } from '@/components/ui/button';
+import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { login } from "@/services/auth.service";
+import { toast } from "sonner";
+import Icon from "@/components/icons";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSeePassword, setSeePassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "tcxh",
+    password: "123456",
+  });
+
+  // Xử lý thay đổi input
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Xử lý submit form
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      // Gọi API login
+
+      // uncomment sau
+      // const response = await login({
+      //   email: formData.email,
+      //   password: formData.password,
+      // });
+
+      if (formData.email === "tcxh" && formData.password === "123456") {
+        toast.success("Đăng nhập thành công!");
+        router.push("/socialorg/dashboard");
+      } else {
+        toast.error("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Hiển thị thông báo thành công
+      // uncomment
+      // toast.success("Đăng nhập thành công!");
+
+      // Redirect đến dashboard
+      // router.push("/socialorg/dashboard");
+    } catch (error: any) {
+      // Hiển thị lỗi
+      const errorMessage =
+        error.response?.data?.message ||
+        "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.";
+      toast.error(errorMessage);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <div className="bg-brand-background text-brand-text flex flex-col min-h-screen font-sans">
       {/* BEGIN: MainContent */}
@@ -18,9 +77,9 @@ export default function LoginPage() {
           <h1 className="text-3xl font-bold text-center mb-8 text-brand-text">
             Đăng nhập
           </h1>
-          
+
           {/* Login Form */}
-          <form action="#" className="space-y-6" method="POST">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Input Field */}
             <div>
               <label
@@ -36,9 +95,12 @@ export default function LoginPage() {
                 placeholder="Tên đăng nhập hoặc Email"
                 required
                 type="text"
+                value={formData.email}
+                onChange={handleChange}
+                disabled={isLoading}
               />
             </div>
-            
+
             {/* Password Input Field */}
             <div>
               <label
@@ -47,32 +109,48 @@ export default function LoginPage() {
               >
                 Mật khẩu
               </label>
-              <input
-                className="w-full px-4 py-3 border border-brand-border rounded-lg focus:ring-brand-teal focus:border-brand-teal text-sm outline-none"
-                id="password"
-                name="password"
-                placeholder="Mật khẩu"
-                required
-                type="password"
-              />
+              <div className=" flex justify-between w-full px-4 py-3 border border-brand-border rounded-lg focus:ring-brand-teal focus:border-brand-teal text-sm outline-none">
+                <input
+                  id="password"
+                  name="password"
+                  placeholder="Mật khẩu"
+                  required
+                  type={isSeePassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={handleChange}
+                  disabled={isLoading}
+                />
+                <Icon
+                  icon={isSeePassword ? "seePassword" : "notSeePassword"}
+                  onClick={() => setSeePassword(!isSeePassword)}
+                />
+              </div>
             </div>
-            
+
             {/* Submit Button */}
-            <Link href={'/socialorg/dashboard'}>{/* Tạm thời trỏ đến trang của tcxh */}
-                <Button className='w-full text-white'>
-                    Đăng nhập
-                </Button>
-            </Link>
+            <Button
+              type="submit"
+              className="w-full text-white"
+              disabled={isLoading}
+            >
+              {isLoading ? "Đang đăng nhập..." : "Đăng nhập"}
+            </Button>
           </form>
 
           {/* Additional Links */}
           <div className="mt-8 text-center text-sm space-y-4">
-            <Link className="text-brand-teal hover:underline" href="/forgot-password">
+            <Link
+              className="text-brand-teal hover:underline"
+              href="/forgot-password"
+            >
               Quên mật khẩu?
             </Link>
             <p className="text-brand-text-light">
               Chưa có tài khoản?{" "}
-              <Link className="text-brand-teal font-semibold hover:underline" href="/register">
+              <Link
+                className="text-brand-teal font-semibold hover:underline"
+                href="/register"
+              >
                 Đăng ký tài khoản
               </Link>
             </p>
@@ -87,7 +165,10 @@ export default function LoginPage() {
           {/* Footer content container */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-12 text-sm text-brand-text-light">
             {/* Phone contact */}
-            <div className="flex items-center gap-3" data-purpose="contact-phone">
+            <div
+              className="flex items-center gap-3"
+              data-purpose="contact-phone"
+            >
               {/* Thay thế bằng icon SVG hoặc ảnh thật */}
               <img
                 alt="phone icon"
@@ -105,7 +186,10 @@ export default function LoginPage() {
               </div>
             </div>
             {/* Email contact */}
-            <div className="flex items-center gap-3" data-purpose="contact-email">
+            <div
+              className="flex items-center gap-3"
+              data-purpose="contact-email"
+            >
               <img
                 alt="email icon"
                 className="h-6 w-6"

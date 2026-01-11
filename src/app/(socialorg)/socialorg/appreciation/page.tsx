@@ -18,13 +18,6 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Table,
   TableBody,
   TableCell,
@@ -109,7 +102,7 @@ export default function RewardPage(){
                
                {/* Filters */}
                <div className="flex flex-wrap gap-4 items-center p-4 border-b border-custom-gray-border">
-                  <div className="flex-grow min-w-[200px]">
+                  <div className="grow min-w-[200px]">
                      <div className="relative">
                         <MdSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xl" />
                         <Input 
@@ -127,7 +120,7 @@ export default function RewardPage(){
                {/* Table */}
                <div className="overflow-x-auto">
                   <Table>
-                     <TableHeader>
+                     <TableHeader className=''>
                         <TableRow className="hover:bg-transparent border-custom-gray-border">
                            <TableHead className="w-[300px] text-custom-text-light font-semibold">Tình nguyện viên</TableHead>
                            <TableHead className="text-custom-text-light font-semibold">Tên Khen thưởng</TableHead>
