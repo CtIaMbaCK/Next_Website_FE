@@ -8,10 +8,19 @@ import { NeedyUser } from '@/data/mockData';
 
 interface UserTableProps {
   data: NeedyUser[]; 
-  onToggleBan: (id: string, status: string) => void;
+  onToggleBan?: (id: string, status: string) => void; //Nút khóa / mở khóa người dùng 
+  onApprove?: (id: string) => void; //Nút duyệt người dùng
+  onAppreciate?: (id: string) => void
+  basePath: string;
 }
 
-export default function UserTable({ data, onToggleBan }: UserTableProps) {
+export default function UserTable({ 
+  data, 
+  onToggleBan, 
+  onAppreciate, 
+  onApprove, 
+  basePath 
+}: UserTableProps) {
   
   // Hàm render status chỉ phục vụ hiển thị
   const renderStatus = (status: string) => {
@@ -58,16 +67,38 @@ export default function UserTable({ data, onToggleBan }: UserTableProps) {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <Toggle 
-                        checked={user.status === 'BANNED'} 
-                        onChange={() => onToggleBan(user.id, user.status)} 
-                      />
-                      <Link href={`/socialorg/bficiary/${user.id}`}>
+                      {/* 3. Chỉ hiển thị Toggle nếu onToggleBan được truyền xuống */}
+                      {onToggleBan && (
+                        <Toggle 
+                          checked={user.status === 'BANNED'} 
+                          onChange={() => onToggleBan(user.id, user.status)} 
+                        />
+                      )}
+                      <Link href={`${basePath}/${user.id}`}>
                         <Button className='bg-white hover:bg-gray-100 border-2 border-gray-300 text-black'>
                           Xem chi tiết
                         </Button>
                       </Link>
-                      <Button className='text-white bg-primary hover:bg-teal-700'>Duyệt</Button>
+                      
+                      {/* 3. Nút Khen thưởng */}
+                      {onAppreciate && (
+                        <Button 
+                          variant="outline"
+                          className='text-custom-teal border-custom-teal hover:bg-custom-teal hover:text-white h-9 px-3 font-medium'
+                          onClick={() => onAppreciate(user.id)}
+                        >
+                          Khen thưởng
+                        </Button>
+                      )}
+
+                      {onApprove && user.status === 'PENDING' && (
+                        <Button 
+                          className='text-white bg-primary hover:bg-teal-700 h-9 px-3'
+                          onClick={() => onApprove(user.id)}
+                        >
+                          Duyệt
+                        </Button>
+                      )}
                     </div>
                   </td>
                 </tr>

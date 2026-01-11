@@ -1,28 +1,35 @@
 'use client';
 
+import { useState } from 'react'; // 1. Import useState
 import { MOCK_DATA } from '@/data/mockData';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { MdStars } from 'react-icons/md'; // Import icon nếu muốn đẹp hơn
+// 2. Import Component Modal Khen thưởng
+import RewardSelectionModal from '@/components/socialorg/RewardSelectionModal';
 
-export default function EditBeneficiaryPage() {
-  // 2. Lấy params thông qua hook thay vì props
+export default function EditVolunteersPage() {
   const params = useParams();
+  
+  // State để quản lý Modal
+  const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
 
-  // 3. Tìm user
-  // Lưu ý: params.id có thể là string hoặc string array, nên ta ép kiểu an toàn
   const userId = Array.isArray(params?.id) ? params.id[0] : params?.id;
   const user = MOCK_DATA.find((u) => u.id === userId);
 
-  // 5. Nếu không tìm thấy
+  // Hàm mở modal
+  const handleAppreciate = () => {
+    setIsRewardModalOpen(true);
+  };
+
   if (!user) {
     return (
         <div className="p-8 text-center">
             <h2 className="text-xl font-bold text-red-600">Không tìm thấy người dùng!</h2>
             <p className="text-gray-500 mt-2">ID đang tìm: {userId || 'Chưa nhận được ID'}</p>
             <div className="mt-4">
-                 {/* Lưu ý đường dẫn quay lại */}
-                 <Link href="/socialorg/bficiary" className="text-blue-500 hover:underline">Quay lại danh sách</Link>
+                 <Link href="/socialorg/volunteers" className="text-blue-500 hover:underline">Quay lại danh sách</Link>
             </div>
         </div>
     );
@@ -30,15 +37,28 @@ export default function EditBeneficiaryPage() {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md max-w-2xl mx-auto my-8">
-      <div className="flex justify-between items-center mb-6 border-b pb-4">
+      
+      {/* Header Section */}
+      <div className="flex justify-between items-start mb-6 border-b pb-4">
         <div>
             <h1 className="text-2xl font-bold text-gray-800">Chỉnh sửa thông tin</h1>
             <p className="text-sm text-gray-500">ID: {user.id}</p>
         </div>
+        
+        {/* --- 3. THÊM NÚT KHEN THƯỞNG TẠI ĐÂY --- */}
+        <Button 
+            variant="outline"
+            className='text-custom-teal border-custom-teal hover:bg-custom-teal hover:text-white font-medium gap-2'
+            onClick={handleAppreciate}
+        >
+            <MdStars className="text-lg" />
+            Khen thưởng
+        </Button>
+        {/* -------------------------------------- */}
       </div>
 
       <form className="space-y-4">
-        {/* --- DỮ LIỆU THẬT --- */}
+        {/* ... (Phần form giữ nguyên như cũ) ... */}
         <div>
           <label className="block text-sm font-medium mb-1 text-gray-700">Họ và tên</label>
           <input 
@@ -85,12 +105,20 @@ export default function EditBeneficiaryPage() {
         </div>
 
         <div className="pt-4 flex justify-end gap-3">
-          <Link href="/socialorg/bficiary">
+          <Link href="/socialorg/volunteers">
             <Button type="button" variant="ghost">Hủy bỏ</Button>
           </Link>
           <Button type="submit" className="bg-primary text-white hover:bg-teal-700">Lưu thay đổi</Button>
         </div>
       </form>
+
+      {/* --- 4. HIỂN THỊ MODAL OVERLAY --- */}
+      <RewardSelectionModal 
+        isOpen={isRewardModalOpen} 
+        onClose={() => setIsRewardModalOpen(false)} 
+        userId={user.id} // Truyền ID của user hiện tại vào modal
+      />
+      {/* ---------------------------------- */}
     </div>
   );
 }

@@ -6,6 +6,9 @@ import UserTable from '@/components/UserTable';
 import { User } from '@/types';
 import { Button } from '@/components/ui/button';
 import Link from "next/link";
+import RewardSelectionModal from '@/components/socialorg/RewardSelectionModal';
+// --- Import từ file dữ liệu chung ---
+import { MOCK_DATA, Volunteers } from '@/data/volunteersMockData';
 import {
   Select,
   SelectContent,
@@ -14,22 +17,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-// Dữ liệu mẫu (Hoặc gọi API ở đây)
-const MOCK_DATA: User[] = [
-  { id: 'uuid-1', fullName: 'Nguyễn Văn An', status: 'ACTIVE', createdAt: '2023-10-15' },
-  { id: 'uuid-2', fullName: 'Trần Thị Bích', status: 'PENDING', createdAt: '2023-10-20' },
-  { id: 'uuid-3', fullName: 'Lê Văn Cường', status: 'DENIED', createdAt: '2023-10-22' },
-  { id: 'uuid-4', fullName: 'Phạm Thị Dung', status: 'BANNED', createdAt: '2023-10-25' },
-  { id: 'uuid-5', fullName: 'Hoàng Văn Em', status: 'PENDING', createdAt: '2023-10-28' },
-];
-
-export default function NeedyPage() {
+export default function VolunteersPage() {
   const [searchTerm, setSearchTerm] = useState('');
   
-  // 1. THÊM STATE CHO STATUS FILTER (Mặc định là 'ALL')
+  // 1. STATES
   const [statusFilter, setStatusFilter] = useState('ALL');
-  
+  const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [users, setUsers] = useState<User[]>(MOCK_DATA);
+
+  // --- 3. LOGIC HÀM handleAppreciate ---
+  const handleAppreciate = (id: string) => {
+    // Lưu ID user được chọn
+    setSelectedUserId(id);
+    // Mở Modal Overlay
+    setIsRewardModalOpen(true);
+  };
+
+  const handleApprove = (id: string) => {
+    setUsers((prevUsers) => 
+      prevUsers.map((user) => {
+        if (user.id === id) return { ...user, status: 'ACTIVE' };
+        return user;
+      })
+    );
+  };
 
   // Logic Toggle Ban
   const handleToggleBan = (id: string, currentStatus: string) => {
@@ -64,10 +76,6 @@ export default function NeedyPage() {
           <h1 className="text-2xl font-bold text-gray-900">Tình nguyện viên</h1>
           <p className="text-sm text-gray-500 mt-1">Quản lý danh sách Tình nguyện viên</p>
         </div>
-        <Button className="gap-2 bg-primary text-white hover:bg-teal-700 shadow-sm">
-            <span className="material-symbols-outlined text-[20px]">add</span>
-            Thêm Tình nguyện viên
-        </Button>
       </div>
 
       {/* Component Toolbar */}
@@ -81,7 +89,6 @@ export default function NeedyPage() {
                 <SelectContent>
                     <SelectItem value="ALL">Tất cả</SelectItem>
                     <SelectItem value="ACTIVE">Hoạt động</SelectItem>
-                    <SelectItem value="PENDING">Chờ duyệt</SelectItem>
                     <SelectItem value="DENIED">Bị từ chối</SelectItem>
                     <SelectItem value="BANNED">Bị khóa</SelectItem>
                 </SelectContent>
@@ -92,7 +99,16 @@ export default function NeedyPage() {
       {/* Component Table */}
       <UserTable 
         data={filteredUsers} 
+        onAppreciate={handleAppreciate}
         onToggleBan={handleToggleBan} 
+        basePath="/socialorg/volunteers"
+      />
+
+      {/* --- 4. HIỂN THỊ MODAL OVERLAY --- */}
+      <RewardSelectionModal 
+        isOpen={isRewardModalOpen} 
+        onClose={() => setIsRewardModalOpen(false)} 
+        userId={selectedUserId}
       />
     </div>
   );
